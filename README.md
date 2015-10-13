@@ -1,6 +1,6 @@
 # typeclassic
 
-Everything you need to first class type classes
+Everything you need to make type classes first class.
 
 ## What is this?
 
