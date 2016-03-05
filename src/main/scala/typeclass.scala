@@ -71,7 +71,7 @@ class TypeClassMacros(val c: Context) {
     q"""
       @_root_.typeclassic.op("$$y {$$x}")
       def apply[$tparam](implicit x1: ${typeClass.name}[${tparam.name}]): ${typeClass.name}[${tparam.name}] =
-        macro OpsMacros.op10
+        macro _root_.typeclassic.OpsMacros.op10
     """
   }
 
