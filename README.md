@@ -1,5 +1,7 @@
 # typeclassic
 
+[![Join the chat at https://gitter.im/typelevel/typeclassic](https://badges.gitter.im/typelevel/typeclassic.svg)](https://gitter.im/typelevel/typeclassic?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Everything you need to make type classes first class.
 
 ## What is this?
