@@ -21,4 +21,6 @@ The current maintainers (pulled from the various constituent projects) are:
 
 ## License
 
-The project will be released under a permissive license, probably MIT or Apache.
+All code is available to you under the Apache 2.0 license, available at https://www.apache.org/licenses/LICENSE-2.0 and also in the LICENSE file.
+
+Copyright the maintainers, 2015-2016.

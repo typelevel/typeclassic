@@ -2,25 +2,23 @@ import ReleaseTransformations._
 
 lazy val typeclassicSettings = Seq(
   organization := "org.typelevel",
-  licenses += ("MIT", url("http://opensource.org/licenses/MIT")),
+  licenses := Seq(("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0"))),
   homepage := Some(url("http://github.com/typelevel/typeclassic")),
 
   scalaVersion := "2.11.7",
-  crossScalaVersions := Seq("2.10.5", "2.11.7"),
+  crossScalaVersions := Seq("2.10.6", "2.11.7"),
 
   scalacOptions ++= Seq(
     "-feature",
     "-deprecation",
     "-unchecked"
   ),
-  libraryDependencies <++= (scalaVersion) { v =>
-    Seq(
-      "org.scala-lang" % "scala-compiler" % v % "provided",
-      "org.scala-lang" % "scala-reflect" % v,
-      "org.typelevel" %% "macro-compat" % "1.1.1",
-      compilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full)
-    )
-  },
+  libraryDependencies ++= Seq(
+    "org.scala-lang" % "scala-compiler" % scalaVersion.value % "provided",
+    "org.scala-lang" % "scala-reflect" % scalaVersion.value,
+    "org.typelevel" %% "macro-compat" % "1.1.1",
+    compilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full)
+  ),
   compileOrder := CompileOrder.JavaThenScala,
   releaseCrossBuild := true,
   releasePublishArtifactsAction := PgpKeys.publishSigned.value,
@@ -28,18 +26,12 @@ lazy val typeclassicSettings = Seq(
   publishArtifact in Test := false,
   pomIncludeRepository := Function.const(false),
 
-  publishTo <<= (version).apply { v =>
-    val nexus = "https://oss.sonatype.org/"
-    if (v.trim.endsWith("SNAPSHOT"))
-      Some("Snapshots" at nexus + "content/repositories/snapshots")
-    else
-      Some("Releases" at nexus + "service/local/staging/deploy/maven2")
-  },
+  publishTo := Some(if (isSnapshot.value) Opts.resolver.sonatypeSnapshots else Opts.resolver.sonatypeStaging),
 
   pomExtra := (
     <scm>
-      <url>git@github.com:non/jawn.git</url>
-      <connection>scm:git:git@github.com:non/jawn.git</connection>
+      <url>git@github.com:typelevel/typeclassic.git</url>
+      <connection>scm:git:git@github.com:typelevel/typeclassic.git</connection>
     </scm>
     <developers>
       <developer>
@@ -88,8 +80,8 @@ lazy val root = project
   .in(file("."))
   .aggregate(typeclassicJS, typeclassicJVM)
   .settings(name := "typeclassic-root")
-  .settings(typeclassicSettings: _*)
-  .settings(noPublish: _*)
+  .settings(typeclassicSettings)
+  .settings(noPublish)
 
 lazy val typeclassic = crossProject
   .crossType(CrossType.Pure)
@@ -100,23 +92,3 @@ lazy val typeclassic = crossProject
 lazy val typeclassicJVM = typeclassic.jvm
 
 lazy val typeclassicJS = typeclassic.js
-
-// name := "typeclassic"
-// organization := "org.typelevel"
-// 
-// version := "0.0.1"
-// 
-// scalaVersion := "2.11.7"
-// 
-// scalacOptions ++= Seq(
-//   "-feature",
-//   "-deprecation",
-//   "-unchecked"
-// )
-// 
-// libraryDependencies <++= (scalaVersion) { v =>
-//   Seq(
-//     "org.scala-lang" % "scala-compiler" % v % "provided",
-//     "org.scala-lang" % "scala-reflect" % v
-//   )
-// }
